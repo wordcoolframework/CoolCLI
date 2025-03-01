@@ -1,0 +1,39 @@
+
+{
+    "name": "wordcoolframework/cool-cli",
+    "description": "CoolView CLI",
+    "version": "1.0.0",
+    "type": "library",
+    "keywords": ["cool cli", "wordcool", "cool artisan"],
+    "license": "MIT",
+    "require": {
+        "php": ">=8.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "CoolCLI\\": "src/",
+            "Configuration\\": "src/Configuration",
+            "Command\\": "command/"
+        },
+        "files": [
+            "src/helper.php"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Vendor\\CoolCli\\Tests\\": "src/Test/"
+        }
+    },
+    "authors": [
+        {
+            "name": "wordcoolframework",
+            "email": "wordcool.framework@gmail.com"
+        }
+    ],
+
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require-dev": {
+        "phpunit/phpunit": "^11.5"
+    }
+}
