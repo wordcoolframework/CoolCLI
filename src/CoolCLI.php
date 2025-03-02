@@ -2,8 +2,11 @@
 
 namespace CoolCLI;
 
+use CoolCLI\Concern\CommandConcern;
+
 final class CoolCLI{
 
+    use CommandConcern;
     private static array $commands  = [];
 
     public static function register(string $className) : void {
@@ -14,31 +17,12 @@ final class CoolCLI{
         string $commandNamespace,
         string $commandDirectory
     ): void {
-
         $files = glob($commandDirectory . '/*.php');
-
-        foreach ($files as $file) {
-            $className = $commandNamespace . '\\' . pathinfo($file, PATHINFO_FILENAME);
-            if (class_exists($className)) {
-                self::register($className);
-            }
-        }
+        self::registerClasses($files, $commandNamespace);
     }
 
     private static function findClosestCommand(string $inputCommand): ?string {
-        $commands = array_map(fn($cmd) => (new $cmd)->commandName, self::$commands);
-        $closest = null;
-        $shortestDistance = PHP_INT_MAX;
-
-        foreach ($commands as $command) {
-            $lev = levenshtein($inputCommand, $command);
-            if ($lev < $shortestDistance) {
-                $closest = $command;
-                $shortestDistance = $lev;
-            }
-        }
-
-        return ($shortestDistance <= 3) ? $closest : null;
+        return self::suggestion($inputCommand);
     }
 
     public static function run(?string $command, ?string $option, string|int|null $argument = null) : void {
@@ -57,10 +41,11 @@ final class CoolCLI{
         }
 
         $suggestedCommand = self::findClosestCommand($command);
+
         if ($suggestedCommand) {
-            echo "Command not found. Did you mean: '$suggestedCommand'?\n";
+            self::handleSuggestionCommand($suggestedCommand, $argument, $option);
         } else {
-            echo "Command not found.\n";
+            echo "\033[1;31mCommand not found.\033[0m\n";
         }
     }
 

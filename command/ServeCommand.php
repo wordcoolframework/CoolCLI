@@ -26,7 +26,7 @@ final class ServeCommand {
         echo "[*] Server running on $host:$port \n";
         echo "Press Ctrl+C to exit . \n";
 //
-//        $command = sprintf('php -S localhost:%d -t %s', $port, escapeshellarg($rootDir));
-//        shell_exec($command);
+        $command = sprintf('php -S localhost:%d -t %s', $port, escapeshellarg($rootDir));
+        shell_exec($command);
     }
 }
