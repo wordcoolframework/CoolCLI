@@ -42,7 +42,11 @@ trait CommandConcern{
         }
     }
 
-    public static function handleSuggestionCommand(string $suggestedCommand, $argument, $option) : void {
+    public static function handleSuggestionCommand(
+        string $suggestedCommand,
+        $argument,
+        $option
+    ) : void {
         echo self::yellow("Command not found!") . "\n";
         echo "Did you mean: " . self::green("'$suggestedCommand'") . " ?\n";
         echo "Select an option: \n";
