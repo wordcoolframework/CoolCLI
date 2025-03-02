@@ -7,6 +7,7 @@ use CoolCLI\Color\ConsoleColor;
 trait CommandConcern{
 
     use ConsoleColor;
+
     public static function registerClasses($files, $commandNamespace) : void {
         foreach ($files as $file) {
             $className = $commandNamespace . '\\' . pathinfo($file, PATHINFO_FILENAME);

@@ -6,8 +6,8 @@ use CoolCLI\CoolCLI;
 
 require_once 'vendor/autoload.php';
 
-$commandNamespace = Config::get('app.CommandNamespace');
-$commandDirectory = __DIR__ . Config::get('app.CommandDirectory');
+$commandNamespace = Config::get('cli.CommandNamespace');
+$commandDirectory = __DIR__ . Config::get('cli.CommandDirectory');
 
 CoolCLI::registerAllCommands($commandNamespace, $commandDirectory);
 
