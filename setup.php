@@ -40,6 +40,32 @@ final class Setup {
             }
         }
     }
+
+    public static function updateComposerJson(): void {
+
+        $composerFile = self::$rootPath . 'composer.json';
+
+        if (!file_exists($composerFile)) {
+            echo "[!] composer.json not found!\n";
+            return;
+        }
+
+        $composerData = json_decode(file_get_contents($composerFile), true);
+
+        if (!isset($composerData['autoload']['psr-4'])) {
+            $composerData['autoload']['psr-4'] = [];
+        }
+
+        if (!isset($composerData['autoload']['psr-4']['Command\\'])) {
+            $composerData['autoload']['psr-4']['Command\\'] = "command";
+        }
+
+        file_put_contents($composerFile, json_encode($composerData, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+
+        echo "[*] composer.json updated!\n";
+
+        exec("composer dump-autoload");
+    }
 }
 
 Setup::init();
@@ -70,6 +96,7 @@ $files = [
 
 Setup::createDirectories($directories);
 Setup::createFiles($files);
+Setup::updateComposerJson();
 
 $scriptPath = __FILE__;
 
