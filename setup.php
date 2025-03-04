@@ -98,9 +98,9 @@ Setup::createDirectories($directories);
 Setup::createFiles($files);
 Setup::updateComposerJson();
 
-//$scriptPath = __FILE__;
-//
-//if (file_exists($scriptPath)) {
-//    unlink($scriptPath);
-//    echo "[*] Setup is completed !: $scriptPath\n";
-//}
+$scriptPath = __FILE__;
+
+if (file_exists($scriptPath)) {
+    unlink($scriptPath);
+    echo "[*] Setup is completed !: $scriptPath\n";
+}
